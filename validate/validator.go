@@ -29,6 +29,7 @@ type ValidatorCollector struct {
 }
 
 func (v *ValidatorCollector) RegisterValidator(name string, validatorFunc func(value reflect.Value) bool) {
+	// 为保证并发安全，只在程序初始化时使用。之后map就只为可读
 	validator := Validator{ValidateFunc: validatorFunc}
 	v.validations[name] = validator
 }
